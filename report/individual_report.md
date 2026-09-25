@@ -1,164 +1,116 @@
-# Member Role Report — Day 10: Data Pipeline & Data Observability
-
-> Mỗi thành viên trong nhóm tự hoàn thành mẫu này để báo cáo đúng vai trò, phần việc và mức hiểu của mình. Không sao chép nguyên báo cáo chung hoặc báo cáo của thành viên khác. Thay nội dung trong dấu `[ ]` và xóa các dòng hướng dẫn không cần thiết trước khi nộp.
+# Báo cáo cá nhân — Checkpoint 2: Benchmark Test Set & ChromaDB Vector Store
 
 ## 1. Thông tin cá nhân
 
-| Thông tin         | Nội dung                  |
-| ------------------ | -------------------------- |
-| Họ và tên       | [Họ và tên]             |
-| MSSV               | [MSSV]                     |
-| Khóa/Lớp         | [K3 hoặc K4]              |
-| Tên nhóm         | [Tên hoặc mã nhóm]     |
-| Vai trò chính    | [Vai trò]                 |
-| Repository         | [Đường dẫn repository] |
-| Ngày hoàn thành | [YYYY-MM-DD]               |
+| Thông tin | Nội dung |
+| --- | --- |
+| Họ và tên | Lê Thị Hoài Thương |
+| MSSV | 2A202602898 |
+| Khóa/Lớp | K4 |
+| Tên nhóm | Khô Gà |
+| Vai trò | Test |
+| Repository | https://github.com/mDoanzz43/K4-L3A-Day10-KhoGa-DataPipeline |
+| Phạm vi báo cáo | Chỉ Checkpoint 2 |
+| Ngày cập nhật | 25/09/2026 |
 
-## 2. Vai trò và phạm vi công việc
+## 2. Mục tiêu Checkpoint 2
 
-### Phần việc sở hữu
+Xây dựng bộ câu hỏi benchmark có ground truth từ dữ liệu bài báo đã làm sạch và lập chỉ mục vector cục bộ bằng ChromaDB. Bộ benchmark dùng để kiểm tra việc retrieval có lấy đúng tài liệu được gắn trong `ground_truth_doc_ids` hay không.
 
-| Module/deliverable | File/hàm phụ trách | Input nhận vào | Output bàn giao  | Trạng thái                                 |
-| ------------------ | --------------------- | ---------------- | ----------------- | -------------------------------------------- |
-| [Phần việc]      | [File/hàm]           | [Input]          | [Output/artifact] | [Hoàn thành/Một phần/Chưa hoàn thành] |
-| [Phần việc]      | [File/hàm]           | [Input]          | [Output/artifact] | [Hoàn thành/Một phần/Chưa hoàn thành] |
+## 3. Phần việc đã thực hiện
 
-Chỉ nhận ownership cho phần bạn trực tiếp thực hiện. Liên hệ rõ phần việc của bạn với đầu vào, đầu ra và các thành viên phụ thuộc vào phần đó.
+| Hạng mục | File/hàm | Input | Output | Trạng thái |
+| --- | --- | --- | --- | --- |
+| Sinh benchmark test set | `src/evaluation/testset.py` — `build_test_set` | DataFrame từ `data/clean/papers_clean.json` | `data/eval/test_set.json` | Hoàn thành |
+| Nạp/đọc benchmark | `src/evaluation/testset.py` — `load_or_create_test_set` | Cleaned DataFrame và đường dẫn test set | `TestSet.samples` | Hoàn thành |
+| Lập chỉ mục ChromaDB | `src/retrieval/index.py` — `LocalEmbeddingIndex.build_from_clean` | `data/clean/papers_clean.json` | Collection `papers-baseline`, manifest `data/embeddings/papers_embeddings.json` | Hoàn thành theo artifact |
+| Truy vấn semantic | `src/retrieval/index.py` — `semantic_search` | Query và `top_k` | Danh sách `SearchResult` | Đã triển khai |
 
-### Việc hỗ trợ ngoài phạm vi chính
+## 4. Benchmark Test Set
 
-| Hoạt động                         | Thành viên/module được hỗ trợ | Kết quả                    |
-| ------------------------------------ | ------------------------------------ | ---------------------------- |
-| [Debug/tích hợp/tài liệu] | [Tên hoặc module] | [Kết quả và bằng chứng] |
+Artifact `data/eval/test_set.json` hiện có **10 câu hỏi**, với hai câu cho mỗi loại:
 
-## 3. Kết quả theo vai trò
+| Loại | Số câu | ID |
+| --- | ---: | --- |
+| `summary` | 2 | `eval_001`, `eval_002` |
+| `authors` | 2 | `eval_003`, `eval_004` |
+| `date` | 2 | `eval_005`, `eval_006` |
+| `category` | 2 | `eval_007`, `eval_008` |
+| `multi_hop` | 2 | `eval_009`, `eval_010` |
 
-| Nhiệm vụ đã thực hiện | File/hàm/artifact liên quan | Kết quả bàn giao       | Cách xác minh         |
-| --------------------------- | ----------------------------- | ------------------------- | ----------------------- |
-| [Mô tả cụ thể] | [Đường dẫn file] | [Artifact/metrics/report] | [Lệnh/artifact] |
-| [Mô tả cụ thể] | [Đường dẫn file] | [Artifact/metrics/report] | [Lệnh/artifact] |
+Mỗi sample gồm các trường bắt buộc:
 
-Nêu một output cụ thể mà phần việc của bạn tạo ra hoặc giúp xác minh:
-
-[Mô tả artifact, metric, report hoặc kết quả tích hợp.]
-
-## 4. Giải thích phần kỹ thuật đã thực hiện
-
-### Vấn đề cần giải quyết
-
-[Phần của bạn giải quyết vấn đề gì trong pipeline?]
-
-### Cách triển khai
-
-[Mô tả thuật toán, quy tắc dữ liệu, orchestration hoặc quyết định chính. Không chỉ chép lại tên hàm.]
-
-### Input, output và contract
-
-| Thành phần                   | Mô tả                                     |
-| ------------------------------ | ------------------------------------------- |
-| Input                          | [Schema, artifact hoặc tham số]           |
-| Output                         | [Schema, artifact hoặc giá trị trả về] |
-| Module phụ thuộc             | [Module/file liên quan]                    |
-| Module sử dụng output        | [Module/file liên quan]                    |
-| Điều kiện lỗi cần xử lý | [Trường hợp thực tế]                   |
-
-### Cách xác minh
-
-```bash
-[Ghi lệnh thực tế đã chạy]
+```json
+{
+  "id": "eval_001",
+  "type": "summary",
+  "question": "...",
+  "ground_truth": "...",
+  "ground_truth_doc_ids": ["10.1145/3637528.3671801"]
+}
 ```
 
-- **Kết quả mong đợi:** [Mô tả.]
-- **Kết quả thực tế:** [Mô tả.]
-- **Artifact/log:** [Đường dẫn; không chứa secret.]
+File cũng giữ trường `question_type` để tương thích với evaluator hiện có. Ground truth được lấy trực tiếp từ các cột cleaned data: `summary`, `authors_joined`, `published`, `categories_joined`; `paper_id` được đưa vào `ground_truth_doc_ids`. Hai câu `multi_hop` có hai document ID vì kết hợp nội dung của hai bài báo.
 
-## 5. Một quyết định kỹ thuật quan trọng
+## 5. ChromaDB Vector Index
 
-- **Bối cảnh:** [Vấn đề hoặc lựa chọn cần quyết định.]
-- **Các phương án đã cân nhắc:** [Ít nhất hai phương án.]
-- **Phương án đã chọn:** [Lựa chọn.]
-- **Lý do:** [Trade-off về correctness, data quality, reproducibility, cost hoặc độ phức tạp.]
-- **Bằng chứng quyết định phù hợp:** [Metric, artifact hoặc kết quả thử nghiệm.]
+Manifest `data/embeddings/papers_embeddings.json` xác nhận các thông tin sau:
 
-## 6. Một lỗi hoặc blocker đã xử lý
+| Thuộc tính | Giá trị |
+| --- | --- |
+| Backend | `chroma` |
+| Embedding model | `sentence-transformers/all-MiniLM-L6-v2` |
+| Collection | `papers-baseline` |
+| Persistent path | `data/chroma` |
+| Nguồn documents | Cleaned papers, với `text_for_embedding` làm nội dung embedding |
 
-- **Triệu chứng/lỗi nguyên văn:** [Che toàn bộ secret trước khi ghi.]
-- **Lệnh hoặc bước tái hiện:** [Lệnh/bước.]
-- **Nguyên nhân gốc:** [Root cause, không chỉ mô tả triệu chứng.]
-- **Cách xử lý:** [Thay đổi cụ thể.]
-- **Cách xác minh sau khi sửa:** [Lệnh và kết quả.]
-- **Điều học được:** [Bài học kỹ thuật.]
+Mỗi document index gồm `record_id`, `paper_id`, `title`, `content` và metadata phục vụ trả lời gồm ngày xuất bản, tác giả, categories, summary, URL.
 
-Nếu chưa xử lý xong:
+## 6. Cách xác minh CP2
 
-- **Phạm vi bị ảnh hưởng:** [Module/artifact.]
-- **Những gì đã loại trừ:** [Các giả thuyết đã kiểm tra.]
-- **Bước tiếp theo:** [Hành động có thể kiểm chứng.]
+Sinh lại bộ 10 câu benchmark:
 
-## 7. Hiểu biết về luồng end-to-end
+```powershell
+python -c "from core.config import load_settings; from evaluation.testset import build_test_set; import pandas as pd; s=load_settings(); df=pd.read_json(s.paths.clean_json); ts=build_test_set(df, s.paths.eval_testset); print(f'Tín hiệu hoàn thành: Sinh được {len(ts)} câu hỏi test')"
+```
 
-Giải thích ngắn gọn bằng lời của bạn:
+Kết quả cần nhận:
 
-1. Dữ liệu đi từ Crossref đến vector index như thế nào?
-2. Evaluation set và ground-truth document IDs dùng để đo retrieval/answer quality ra sao?
-3. Quality checks khác freshness monitoring ở điểm nào trong bài lab?
-4. Vì sao phải dùng cùng test set cho baseline, corrupted và repaired?
-5. Repair được xem là thành công dựa trên artifact và metric nào?
+```text
+Tín hiệu hoàn thành: Sinh được 10 câu hỏi test
+```
 
-**Câu trả lời:**
+Smoke test tạo index và truy vấn hai tài liệu:
 
-[Viết câu trả lời tại đây.]
+```powershell
+python -c "from core.config import load_settings; from retrieval.index import LocalEmbeddingIndex; s=load_settings(); idx=LocalEmbeddingIndex(s, collection_name='papers-baseline'); idx.build_from_clean(); res=idx.semantic_search('machine learning', top_k=2); print(f'Tín hiệu hoàn thành: Tìm thấy {len(res)} tài liệu liên quan')"
+```
 
-## 8. Phân tích kết quả
+Kết quả cần nhận:
 
-### Metrics chính
+```text
+Tín hiệu hoàn thành: Tìm thấy 2 tài liệu liên quan
+```
 
-| Metric/signal          | Baseline | Corrupted | Repaired | Nhận xét của cá nhân |
-| ---------------------- | -------: | --------: | -------: | ------------------------- |
-| `retrieval_hit_rate` |      [ ] |       [ ] |      [ ] | [Nhận xét]              |
-| `mean_token_f1`      |      [ ] |       [ ] |      [ ] | [Nhận xét]              |
-| `judge_accuracy`     |      [ ] |       [ ] |      [ ] | [Nhận xét]              |
-| `mean_judge_score`   |      [ ] |       [ ] |      [ ] | [Nhận xét]              |
-| Quality checks         |      [ ] |       [ ] |      [ ] | [Nhận xét]              |
-| Freshness status       |      [ ] |       [ ] |      [ ] | [Nhận xét]              |
+## 7. Lỗi đã gặp trong phạm vi CP2
 
-### Kết luận từ số liệu
+- **Triệu chứng:** `ModuleNotFoundError: No module named 'core'` khi chạy lệnh CP2 trong virtual environment.
+- **Nguyên nhân:** project sử dụng layout `src/`, nhưng package chưa được cài ở editable mode nên Python không tìm thấy module `core`.
+- **Cách xử lý:** tại thư mục gốc project, sau khi kích hoạt `.venv`, chạy:
 
-Hoàn thành hai chuỗi nguyên nhân–bằng chứng sau:
+```powershell
+python -m pip install -e .
+```
 
-1. [Data corruption] → [quality/freshness signal thay đổi] → [agent metric thay đổi].
-2. [Repair action] → [quality/freshness signal phục hồi] → [agent metric phục hồi hoặc chưa phục hồi].
+- **Cách kiểm tra:**
 
-Corruption nào ảnh hưởng rõ nhất và vì sao?
+```powershell
+python -c "from core.config import load_settings; print('Import core thành công')"
+```
 
-[Phân tích dựa trên số liệu.]
+## 8. Cam kết phạm vi
 
-Kết quả nào khác với kỳ vọng ban đầu?
+Báo cáo này chỉ ghi nhận công việc, artifact và lệnh xác minh của **Checkpoint 2**. Không bao gồm nội dung, kết quả hoặc metric của các checkpoint khác.
 
-[Nêu kết quả, giả thuyết và cách đã kiểm tra.]
-
-## 9. Điều học được và hướng cải thiện
-
-### Ba điều quan trọng nhất
-
-1. [Điều học được về data pipeline.]
-2. [Điều học được về data quality/observability.]
-3. [Điều học được về ảnh hưởng của data đến RAG agent.]
-
-### Nếu có thêm thời gian
-
-[Nêu một cải thiện cụ thể, lý do và cách đo cải thiện đó.]
-
-## 10. Cam kết của thành viên
-
-Đánh dấu sau khi tự kiểm tra:
-
-- [ ] Nội dung báo cáo phản ánh đúng phần việc và mức hiểu của tôi.
-- [ ] Tôi có thể giải thích luồng end-to-end, không chỉ module mình phụ trách.
-- [ ] Mọi kết luận về kết quả đều có artifact hoặc metric để đối chiếu.
-- [ ] Tôi không ghi “đã chạy thành công” cho phần chưa được kiểm chứng.
-- [ ] Báo cáo không chứa `.env`, API key, token hoặc secret.
-- [ ] Báo cáo này không phải bản sao nguyên văn của báo cáo nhóm hoặc báo cáo thành viên khác.
-
-**Họ và tên:** [Họ và tên]
-**Ngày xác nhận:** [YYYY-MM-DD]
+**Họ và tên:** Lê Thị Hoài Thương  
+**Ngày xác nhận:** 2026-09-25
