@@ -196,6 +196,18 @@ GOOGLE_API_KEY=your_gemini_api_key_here
 
 ## 6. QUY TẮC PHỐI HỢP & CHECKLIST TRƯỚC KHI NỘP BÀI
 
+### Dashboard Streamlit để demo workflow
+
+Sau khi cài dependencies, chạy dashboard tại thư mục gốc:
+
+```powershell
+$env:LLM_PROVIDER="mock"
+streamlit run streamlit_app.py
+```
+
+Dashboard cho phép quan sát data contract, Quality/Freshness, metrics của ba trạng thái, sáu corruption scenarios, artifact registry và chạy trực tiếp hai pipeline CP3–CP5 với live log. Chế độ `mock` không yêu cầu API key và phù hợp cho demo tái lập.
+
+
 ### 👥 Phân chia vai trò gợi ý (Nhóm 4 thành viên):
 - **Thành viên 1 (Pipeline Lead & Integrator):** Điều phối luồng, quản lý cấu hình `core/`, kết nối `phase1.py` và `corruption_flow.py`.
 - **Thành viên 2 (Data Foundation Owner):** Phụ trách thu thập `crossref.py`, làm sạch `cleaning.py` và khôi phục dữ liệu từ Raw.

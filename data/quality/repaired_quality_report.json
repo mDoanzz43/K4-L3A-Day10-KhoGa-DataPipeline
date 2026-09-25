@@ -177,8 +177,8 @@
       "batch_data": "PandasDataFrame"
     },
     "batch_markers": {
-      "ge_load_time": "20260925T093713.288493Z",
-      "pandas_data_fingerprint": "58ab82899dd9d978222c24169e488b26"
+      "ge_load_time": "20260925T102341.679269Z",
+      "pandas_data_fingerprint": "66f9714d4dc296908f874c538f9bee68"
     },
     "active_batch_definition": {
       "datasource_name": "papers_source",
@@ -191,13 +191,13 @@
   },
   "id": null,
   "report_name": "repaired",
-  "generated_at": "2026-09-25T09:37:13.347418+00:00",
+  "generated_at": "2026-09-25T10:23:41.744858+00:00",
   "freshness": {
-    "latest_published": "2026-09-15",
-    "oldest_published": "2026-04-01",
-    "stale_rows": 0,
+    "latest_published": "2026-07-22",
+    "oldest_published": "2026-03-28",
+    "stale_rows": 1,
     "total_rows": 24,
-    "stale_ratio": 0.0,
+    "stale_ratio": 0.041666666666666664,
     "stale_threshold_days": 180,
     "max_stale_ratio": 0.25,
     "is_fresh": true,

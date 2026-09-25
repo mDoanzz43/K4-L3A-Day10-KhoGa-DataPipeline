@@ -1,6 +1,6 @@
 # Phase 1 — Baseline Pipeline Report
 
-Generated at: `2026-09-25T09:36:52.312440+00:00`
+Generated at: `2026-09-25T12:21:51.620749+00:00`
 
 ## Pipeline status
 
@@ -32,9 +32,9 @@ Generated at: `2026-09-25T09:36:52.312440+00:00`
 | --- | ---: |
 | `samples` | 10 |
 | `retrieval_hit_rate` | 1.0000 |
-| `mean_token_f1` | 1.0000 |
-| `judge_accuracy` | 1.0000 |
-| `mean_judge_score` | 5 |
+| `mean_token_f1` | 0.9044 |
+| `judge_accuracy` | 0.9000 |
+| `mean_judge_score` | 4.4000 |
 
 Ragas: `{'skipped': 'Set RUN_RAGAS=1 to enable the slower Ragas pass.'}`
 
@@ -53,11 +53,11 @@ Ragas: `{'skipped': 'Set RUN_RAGAS=1 to enable the slower Ragas pass.'}`
 
 | Property | Value |
 | --- | --- |
-| Latest publication | 2026-09-15 |
-| Oldest publication | 2026-04-01 |
+| Latest publication | 2026-07-22 |
+| Oldest publication | 2026-03-28 |
 | Stale threshold | 180 days |
-| Stale records | 0 / 24 |
-| Stale ratio | 0.00% |
+| Stale records | 1 / 24 |
+| Stale ratio | 4.17% |
 | Maximum allowed stale ratio | 25.00% |
 | Status | PASS |
 
@@ -65,6 +65,6 @@ Ragas: `{'skipped': 'Set RUN_RAGAS=1 to enable the slower Ragas pass.'}`
 
 The baseline contains **24 cleaned papers**.
 
-Retrieval hit rate is **100.00%** and mean token F1 is **100.00%**.
+Retrieval hit rate is **100.00%** and mean token F1 is **90.44%**.
 
 The quality gate is **PASS** and the freshness SLA is **PASS**.
