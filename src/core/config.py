@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-import os
 
 from dotenv import load_dotenv
 
@@ -141,6 +141,8 @@ def load_settings(project_dir: Path | None = None) -> Settings:
 
 def normalized_provider(settings: Settings) -> str:
     provider = settings.llm_provider.strip().lower().replace(" ", "").replace("-", "")
+    if provider in {"google", "googlegenai"}:
+        return "gemini"
     if provider == "anthorpic":
         return "anthropic"
     if provider == "customllm":

@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import html
 import re
+from collections.abc import Iterable
 from datetime import UTC, datetime
-from typing import Any, Iterable
+from typing import Any
 
 import pandas as pd
 
 from ingestion.crossref import PaperRecord
-
 
 OUTPUT_COLUMNS = [
     "paper_id",
@@ -93,11 +93,11 @@ def _normalize_run_date(run_date: datetime) -> pd.Timestamp:
 def _embedding_text(row: dict[str, Any]) -> str:
     return "\n".join(
         (
-            f"Title: {row['title']}",
-            f"Authors: {row['authors_joined']}",
-            f"Published: {row['published']}",
-            f"Categories: {row['categories_joined']}",
-            f"Summary: {row['summary']}",
+            f"Title: {row['title']}".rstrip(),
+            f"Authors: {row['authors_joined']}".rstrip(),
+            f"Published: {row['published']}".rstrip(),
+            f"Categories: {row['categories_joined']}".rstrip(),
+            f"Summary: {row['summary']}".rstrip(),
         )
     )
 

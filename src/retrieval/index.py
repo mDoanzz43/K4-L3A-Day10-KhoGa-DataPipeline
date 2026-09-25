@@ -80,13 +80,27 @@ class LocalEmbeddingIndex:
             return name_map[resolved_path]
         return safe_slug(embeddings_output_path.stem)
 
+    @staticmethod
+    def _portable_persist_path(settings: Settings, persist_path: Path) -> str:
+        """Store project-local paths relative to the repository root."""
+        try:
+            return str(persist_path.resolve().relative_to(settings.paths.project_dir))
+        except ValueError:
+            return str(persist_path)
+
+    @staticmethod
+    def _resolve_persist_path(settings: Settings, persist_path: str) -> Path:
+        """Resolve both portable manifests and legacy absolute manifests."""
+        path = Path(persist_path)
+        return path if path.is_absolute() else settings.paths.project_dir / path
+
     @classmethod
     def build(
         cls,
         df: pd.DataFrame,
         settings: Settings,
         embeddings_output_path: Path | None = None,
-    ) -> "LocalEmbeddingIndex":
+    ) -> LocalEmbeddingIndex:
         collection_name = cls._derive_collection_name(settings, embeddings_output_path)
         documents = cls._build_documents(df)
         persist_path = settings.paths.chroma_dir
@@ -96,7 +110,7 @@ class LocalEmbeddingIndex:
         client = chromadb.PersistentClient(path=str(persist_path))
         try:
             client.delete_collection(name=collection_name)
-        except Exception:
+        except chromadb.errors.NotFoundError:
             pass
         collection = client.create_collection(
             name=collection_name,
@@ -116,7 +130,7 @@ class LocalEmbeddingIndex:
             {
                 "backend": "chroma",
                 "embedding_model": settings.embedding_model,
-                "persist_path": str(persist_path),
+                "persist_path": cls._portable_persist_path(settings, persist_path),
                 "collection_name": collection_name,
                 "documents": documents,
             },
@@ -129,13 +143,13 @@ class LocalEmbeddingIndex:
         )
 
     @classmethod
-    def load(cls, settings: Settings, embeddings_path: Path | None = None) -> "LocalEmbeddingIndex":
+    def load(cls, settings: Settings, embeddings_path: Path | None = None) -> LocalEmbeddingIndex:
         payload = read_json(embeddings_path or settings.paths.embeddings_json)
         return cls(
             settings=settings,
             collection_name=payload["collection_name"],
             documents=payload["documents"],
-            persist_path=Path(payload["persist_path"]),
+            persist_path=cls._resolve_persist_path(settings, payload["persist_path"]),
         )
 
     def search(self, query: str, top_k: int | None = None) -> list[SearchResult]:

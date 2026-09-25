@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-09-25T09:33:13.048983+00:00",
+  "input_rows": 24,
+  "output_rows": 21,
+  "scenario_count": 6,
+  "scenarios": [
+    {
+      "type": "drop_latest_records",
+      "description": "Removed the newest 20% of records by publication date.",
+      "affected_rows": 5,
+      "paper_ids": [
+        "10.21203/rs.3.rs-10489777/v1",
+        "10.70267/aitia.2026482489",
+        "10.21203/rs.3.rs-10349437/v1",
+        "10.54254/2755-2721/2026.36624",
+        "10.36887/2415-8453-2026-3-2"
+      ]
+    },
+    {
+      "type": "blank_summary",
+      "description": "Replaced selected summaries with empty strings.",
+      "affected_rows": 3,
+      "paper_ids": [
+        "10.28932/jutisi.v12i2.13099",
+        "10.20944/preprints202608.1849.v1",
+        "10.21203/rs.3.rs-10423755/v1"
+      ]
+    },
+    {
+      "type": "inject_noise",
+      "description": "Prefixed selected summaries with repeated synthetic noise.",
+      "affected_rows": 3,
+      "paper_ids": [
+        "10.3390/knowledge6030022",
+        "10.36948/ijfmr.2026.v08i04.85777",
+        "10.2118/234689-pa"
+      ]
+    },
+    {
+      "type": "truncate_title",
+      "description": "Truncated selected titles to fewer than 8 characters.",
+      "affected_rows": 5,
+      "paper_ids": [
+        "10.28932/jutisi.v12i2.13099",
+        "10.20944/preprints202608.1849.v1",
+        "10.21203/rs.3.rs-10423755/v1",
+        "10.3390/knowledge6030022",
+        "10.36948/ijfmr.2026.v08i04.85777"
+      ]
+    },
+    {
+      "type": "stale_date",
+      "description": "Moved selected publication dates 365 days into the past.",
+      "affected_rows": 7,
+      "paper_ids": [
+        "10.28932/jutisi.v12i2.13099",
+        "10.20944/preprints202608.1849.v1",
+        "10.21203/rs.3.rs-10423755/v1",
+        "10.3390/knowledge6030022",
+        "10.36948/ijfmr.2026.v08i04.85777",
+        "10.2118/234689-pa",
+        "10.1007/s10278-026-02086-9"
+      ]
+    },
+    {
+      "type": "duplicate_rows",
+      "description": "Appended exact copies of selected records.",
+      "affected_rows": 2,
+      "paper_ids": [
+        "10.28932/jutisi.v12i2.13099",
+        "10.20944/preprints202608.1849.v1"
+      ]
+    }
+  ]
+}

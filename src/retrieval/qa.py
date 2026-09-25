@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 from core.config import Settings
 from core.utils import first_sentence
@@ -21,11 +21,11 @@ def _extract_answer(question: str, top_result: SearchResult) -> str:
     lowered = question.lower()
     metadata = top_result.metadata
     if "who authored" in lowered or "list the authors" in lowered:
-        return metadata["authors_joined"]
+        return metadata["authors_joined"] or "No authors listed."
     if "when was" in lowered or "publication date" in lowered or "published on" in lowered:
         return metadata["published"]
     if "what categories" in lowered:
-        return metadata["categories_joined"]
+        return metadata["categories_joined"] or "No categories listed."
     return first_sentence(metadata["summary"])
 
 

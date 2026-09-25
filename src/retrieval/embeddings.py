@@ -8,7 +8,12 @@ from sentence_transformers import SentenceTransformer
 
 @lru_cache(maxsize=4)
 def _load_model(model_name: str) -> SentenceTransformer:
-    return SentenceTransformer(model_name)
+    try:
+        # Avoid slow Hub retries when a previously downloaded model is used in
+        # an offline lab. A network download is attempted only on a cache miss.
+        return SentenceTransformer(model_name, local_files_only=True)
+    except OSError:
+        return SentenceTransformer(model_name)
 
 
 class MiniLMEmbeddings(Embeddings):
