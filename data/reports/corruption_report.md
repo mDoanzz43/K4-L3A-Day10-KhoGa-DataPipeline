@@ -1,6 +1,6 @@
 # Data Corruption and Idempotent Repair Report
 
-Generated at: `2026-09-25T09:37:14.746199+00:00`
+Generated at: `2026-09-25T10:23:42.586566+00:00`
 
 ## Executive summary
 
@@ -12,10 +12,10 @@ Overall repair status: **FULLY RECOVERED**.
 
 | Metric | Baseline | Corrupted | Repaired | Corruption delta | Repaired vs baseline |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| `retrieval_hit_rate` | 1.0000 | 0.0000 | 1.0000 | -1.0000 | +0.0000 |
-| `mean_token_f1` | 1.0000 | 0.2546 | 1.0000 | -0.7454 | +0.0000 |
-| `judge_accuracy` | 1.0000 | 0.2000 | 1.0000 | -0.8000 | +0.0000 |
-| `mean_judge_score` | 5.0000 | 1.8000 | 5.0000 | -3.2000 | +0.0000 |
+| `retrieval_hit_rate` | 1.0000 | 0.6000 | 1.0000 | -0.4000 | +0.0000 |
+| `mean_token_f1` | 0.9044 | 0.8832 | 0.9044 | -0.0212 | +0.0000 |
+| `judge_accuracy` | 0.9000 | 0.9000 | 0.9000 | +0.0000 | +0.0000 |
+| `mean_judge_score` | 4.4000 | 4.2000 | 4.4000 | -0.2000 | +0.0000 |
 
 ## Corruption impact analysis
 
@@ -28,7 +28,7 @@ The six controlled failures affect different parts of the RAG pipeline:
 5. **Stale date:** moves publication dates back 365 days, pushing the stale ratio above the 25% Freshness SLA limit.
 6. **Duplicate rows:** violates `paper_id` uniqueness and can over-represent duplicated content in retrieval results.
 
-Together, these failures reduced retrieval hit rate by **100.00%**, mean token F1 by **74.54%**, and judge accuracy by **80.00%**. The simultaneous metric collapse and observability alerts demonstrate that this is a data-induced failure rather than an application crash.
+Together, these failures reduced retrieval hit rate by **40.00%**, mean token F1 by **2.12%**, and judge accuracy by **0.00%**. The simultaneous metric collapse and observability alerts demonstrate that this is a data-induced failure rather than an application crash.
 
 ## Data observability comparison
 
@@ -36,8 +36,8 @@ Together, these failures reduced retrieval hit rate by **100.00%**, mean token F
 | --- | --- | --- | --- |
 | Data quality gate | PASS | FAIL | PASS |
 | Freshness SLA | PASS | FAIL | PASS |
-| Stale rows | 0 | 9 | 0 |
-| Stale ratio | 0.00% | 42.86% | 0.00% |
+| Stale rows | 0 | 10 | 1 |
+| Stale ratio | 0.00% | 47.62% | 4.17% |
 | Total rows | 24 | 21 | 24 |
 
 ## Repair method
@@ -63,4 +63,4 @@ Because repair is a pure rebuild from trusted raw input, repeated executions pro
 
 ## Conclusion
 
-Retrieval hit rate recovered from **0.00%** to **100.00%**. Mean token F1 recovered from **25.46%** to **100.00%**. The repaired results match the clean baseline.
+Retrieval hit rate recovered from **60.00%** to **100.00%**. Mean token F1 recovered from **88.32%** to **90.44%**. The repaired results match the clean baseline.
