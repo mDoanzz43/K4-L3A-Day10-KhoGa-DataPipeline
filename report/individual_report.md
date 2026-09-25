@@ -168,6 +168,4 @@ Tôi sẽ bổ sung ablation experiment: tạo sáu dataset riêng, mỗi datase
 - [x] Báo cáo không chứa `.env`, API key, token hoặc secret.
 - [x] Báo cáo này không phải bản sao nguyên văn của báo cáo nhóm hoặc báo cáo thành viên khác.
 
-**Họ và tên:** **[Cần điền họ và tên]**
-
 **Ngày xác nhận:** 2026-09-25
