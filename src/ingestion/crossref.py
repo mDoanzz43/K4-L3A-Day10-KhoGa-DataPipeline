@@ -14,7 +14,6 @@ import requests
 
 from core.config import Settings
 
-
 LOGGER = logging.getLogger(__name__)
 CROSSREF_WORKS_URL = "https://api.crossref.org/works"
 
@@ -123,7 +122,7 @@ def _iso_date_from_block(block: Any) -> str:
     date_time = block.get("date-time")
     if isinstance(date_time, str) and date_time.strip():
         try:
-            parsed = datetime.fromisoformat(date_time.strip().replace("Z", "+00:00"))
+            parsed = datetime.fromisoformat(date_time.strip())
             return parsed.date().isoformat()
         except ValueError:
             pass
@@ -239,7 +238,7 @@ def _read_payload_snapshot(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as file:
         payload = json.load(file)
     if not isinstance(payload, dict):
-        raise ValueError(f"Crossref snapshot must contain a JSON object: {path}")
+        raise TypeError(f"Crossref snapshot must contain a JSON object: {path}")
     return payload
 
 
@@ -302,7 +301,7 @@ def load_raw_records(path: Path) -> list[PaperRecord]:
     if isinstance(data, dict):
         return parse_crossref_payload(data)
     if not isinstance(data, list):
-        raise ValueError(f"Raw records must contain a JSON list: {path}")
+        raise TypeError(f"Raw records must contain a JSON list: {path}")
 
     records: list[PaperRecord] = []
     for item in data:

@@ -177,7 +177,7 @@
       "batch_data": "PandasDataFrame"
     },
     "batch_markers": {
-      "ge_load_time": "20260925T093302.745920Z",
+      "ge_load_time": "20260925T093650.480427Z",
       "pandas_data_fingerprint": "58ab82899dd9d978222c24169e488b26"
     },
     "active_batch_definition": {
@@ -191,7 +191,7 @@
   },
   "id": null,
   "report_name": "baseline",
-  "generated_at": "2026-09-25T09:33:02.781470+00:00",
+  "generated_at": "2026-09-25T09:36:50.515500+00:00",
   "freshness": {
     "latest_published": "2026-09-15",
     "oldest_published": "2026-04-01",

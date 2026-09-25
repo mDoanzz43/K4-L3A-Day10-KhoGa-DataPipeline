@@ -1,12 +1,20 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from itertools import cycle
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 
-from core.utils import first_sentence, normalize_whitespace, write_json
+from core.utils import first_sentence, normalize_whitespace, read_json, write_json
+
+
+@dataclass(frozen=True)
+class TestSet:
+    """Serializable benchmark samples used to evaluate retrieval and QA."""
+
+    samples: list[dict[str, Any]]
 
 QUESTION_TYPES = (
     "summary",
@@ -121,3 +129,27 @@ def build_test_set(df: pd.DataFrame, output_path: str | Path) -> list[dict[str, 
 
     write_json(Path(output_path), test_set)
     return test_set
+
+
+def load_or_create_test_set(df: pd.DataFrame, output_path: str | Path) -> TestSet:
+    """Load an existing valid benchmark or create it from clean data."""
+    path = Path(output_path)
+    if path.exists():
+        samples = read_json(path)
+        required_fields = {
+            "id",
+            "question_type",
+            "question",
+            "ground_truth",
+            "ground_truth_doc_ids",
+        }
+        if (
+            isinstance(samples, list)
+            and len(samples) == 10
+            and all(
+                isinstance(sample, dict) and required_fields <= set(sample)
+                for sample in samples
+            )
+        ):
+            return TestSet(samples=samples)
+    return TestSet(samples=build_test_set(df, path))

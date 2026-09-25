@@ -213,7 +213,7 @@
       "batch_data": "PandasDataFrame"
     },
     "batch_markers": {
-      "ge_load_time": "20260925T093313.070072Z",
+      "ge_load_time": "20260925T093711.244571Z",
       "pandas_data_fingerprint": "453c5aa78f6abe3f314212e84c272302"
     },
     "active_batch_definition": {
@@ -227,7 +227,7 @@
   },
   "id": null,
   "report_name": "corrupted",
-  "generated_at": "2026-09-25T09:33:13.109797+00:00",
+  "generated_at": "2026-09-25T09:37:11.310172+00:00",
   "freshness": {
     "latest_published": "2026-07-10",
     "oldest_published": "2025-07-13",
